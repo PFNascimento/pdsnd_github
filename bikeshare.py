@@ -1,12 +1,12 @@
 import time
-import os
-import sys
 import pandas as pd
 import numpy as np
 
 CITY_DATA = { 'chicago': 'chicago.csv',
               'new york city': 'new_york_city.csv',
               'washington': 'washington.csv' }
+
+#change to register on GitHub - 11/03/2021
 
 
 def get_filters():
@@ -22,46 +22,43 @@ def get_filters():
     # TO DO: get user input for city (chicago, new york city, washington). HINT: Use a while loop to handle invalid inputs
 
     city = ''
-
-    print("\n" * os.get_terminal_size().lines)
+    
     while city not in CITY_DATA.keys():
         print("\nPlease, enter the name of chosen city: Chicago, New York City or Washington.")
         print("What do you prefer:")
         city = input().lower()
-
+        
         if city not in CITY_DATA.keys():
             print("\n",city," is an invalid city. You have to choose chicago, new york city or washington")
             print("Please, check spelling and enter the city gain...")
-
+            
     # TO DO: get user input for month (all, january, february, ... , june)
     MONTH_DATA = {'all':0, 'january': 1, 'february': 2, 'march': 3, 'april': 4, 'may': 5, 'june': 6}
     month = ''
-
-    print("\n" * os.get_terminal_size().lines)
+    
     while month not in MONTH_DATA.keys():
         print("\nPlease, now chosen a month - january to june or all")
         print("Which month do you prefer:")
         month = input().lower()
-
+        
         if month not in MONTH_DATA.keys():
             print("\nYou have written",month," that is not on the list of months options.")
             print("Please, check spelling and if the month is on the list bellow:")
             print("months: January, February,Mmarch, April, May, June or All for total months")
-
+            
     # TO DO: get user input for day of week (all, monday, tuesday, ... sunday)
     DAY_DATA = ['all', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday']
     day = ''
-
-    print("\n" * os.get_terminal_size().lines)
+    
     while day not in DAY_DATA:
         print("\nPlease, finally, select a day of week - Monday to Sunday or All for whole week")
         day = input().lower()
-
+        
         if day not in DAY_DATA:
             print("\nYou have written",day," that is not on the list of week days.")
             print("Please, check spelling and if the week day is on the list bellow:")
             print("days: Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday or All for whole week")
-
+    
     print('-'*40)
     return city, month, day
 
@@ -78,9 +75,9 @@ def load_data(city, month, day):
         df - Pandas DataFrame containing city data filtered by month and day
     """
     df = pd.read_csv(CITY_DATA[city])
-
+    
     df['Start Time'] = pd.to_datetime(df['Start Time'])
-
+    
     df['month'] = df['Start Time'].dt.month
     df['day_of_week'] = df['Start Time'].dt.day_name()
 
@@ -107,19 +104,19 @@ def time_stats(df):
     # TO DO: display the most common month
     mostcom_month = df['month'].mode()[0]
     print("\nMost common month:", mostcom_month)
-
+    
     # TO DO: display the most common day of week
     mostcom_day = df['day_of_week'].mode()[0]
     print("\nMost common day:", mostcom_day)
-
+    
     # TO DO: display the most common start hour
     df['hour'] = df['Start Time'].dt.hour
     mostcom_hour = df['hour'].mode()[0]
-    print("\nMost common start hour: ", mostcom_hour)
+    print("\nMost common start hour: ", mostcom_hour) 
 
     print("\nThis took %s seconds." % (time.time() - start_time))
     print('-'*40)
-
+    
     input("Press Enter to continue...")
 
 
@@ -137,7 +134,7 @@ def station_stats(df):
     # TO DO: display most commonly used end station
     mostcom_endstation = df['End Station'].mode()[0]
     print("\nMost commonly used end station is ",mostcom_endstation)
-
+    
     # TO DO: display most frequent combination of start station and end station trip
     df['Start and End Station trip'] = df['Start Station'] + ' to ' + df['End Station']
     mostfreq_StartEnd = df['Start and End Station trip'].mode()[0]
@@ -145,7 +142,7 @@ def station_stats(df):
 
     print("\nThis took %s seconds." % (time.time() - start_time))
     print('-'*40)
-
+    
     input("Press Enter to continue...")
 
 def trip_duration_stats(df):
@@ -202,17 +199,16 @@ def user_stats(df):
     print('-'*40)
 
     input("Press Enter to continue...")
-
+   
 
 def rawdata_print(df):
     PRT_RAWDATA = {'header','raw','no'}
     prt_rd_opt = {'yes','no'}
-
+    
     prt_rd = ''
     prt_rd5 = ''
-
+    
     while prt_rd not in PRT_RAWDATA:
-            print("\n" * os.get_terminal_size().lines)
             prt_rd = input("\nWould you like to print the header or the raw data? Enter header, raw or no.\n")
             if prt_rd.lower() == 'header':
                 print(df.head())
@@ -223,7 +219,6 @@ def rawdata_print(df):
                     prt_rd = ''
                     print(df.iloc[lfrom:lto,:])
                     while prt_rd5 not in prt_rd_opt:
-                            print("\n" * os.get_terminal_size().lines)
                             prt_rd5 = input("\nWould you like to print additional 5 lines? Enter yes or no.\n")
                             if prt_rd5.lower() == "yes":
                                  print(df.iloc[lfrom:lto,:])
@@ -236,10 +231,10 @@ def rawdata_print(df):
             elif prt_rd.lower() == 'no':
                  break
             else: print("\nSorry, I couldn\'t understand! The option",prt_rd,"is not available.")
-
+            
 def main():
     RESTART_OPT = {'yes','no'}
-
+    
     while True:
         city, month, day = get_filters()
         df = load_data(city, month, day)
@@ -249,17 +244,16 @@ def main():
         trip_duration_stats(df)
         user_stats(df)
         rawdata_print(df)
-
+    
         restart = ''
-
+        
         while restart not in RESTART_OPT:
             restart = input("\nPlease, would you like to restart? Enter yes or no.\n")
             if restart not in RESTART_OPT:
                  print("\nSorry, I couldn\'t understand! The option",restart,"is not available.")
             elif restart.lower() == "no":
-                 print("\n" * os.get_terminal_size().lines)
                  print("Thank you! Obrigado! Gracias! Grazie! Merci! xiè xiè!")
-                 sys.exit()
+                 exit()
 
 if __name__ == "__main__":
 	main()
