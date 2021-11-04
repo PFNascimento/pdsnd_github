@@ -7,7 +7,7 @@
 Anglo American - Paulo Fernando Nascimento - GitHub Project
 
 ### Description
-After try a couple of times fix the issues on the first try I decid restart the project
+After try a couple of times fix the issues on the first try I decid restart the project - second change
 
 ### Files used
 .gitignore that list csv files: chicago, new_your_city, and washington
