@@ -1,4 +1,5 @@
 import time
+import os
 import sys
 import pandas as pd
 import numpy as np
@@ -22,6 +23,7 @@ def get_filters():
 
     city = ''
     
+    print("\n" * os.get_terminal_size().lines)
     while city not in CITY_DATA.keys():
         print("\nPlease, enter the name of chosen city: Chicago, New York City or Washington.")
         print("What do you prefer:")
@@ -35,6 +37,7 @@ def get_filters():
     MONTH_DATA = {'all':0, 'january': 1, 'february': 2, 'march': 3, 'april': 4, 'may': 5, 'june': 6}
     month = ''
     
+    print("\n" * os.get_terminal_size().lines)
     while month not in MONTH_DATA.keys():
         print("\nPlease, now chosen a month - january to june or all")
         print("Which month do you prefer:")
@@ -49,6 +52,7 @@ def get_filters():
     DAY_DATA = ['all', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday']
     day = ''
     
+    print("\n" * os.get_terminal_size().lines)
     while day not in DAY_DATA:
         print("\nPlease, finally, select a day of week - Monday to Sunday or All for whole week")
         day = input().lower()
@@ -207,6 +211,7 @@ def rawdata_print(df):
     prt_rd = ''
     prt_rd5 = ''
     
+    print("\n" * os.get_terminal_size().lines)
     while prt_rd not in PRT_RAWDATA:
             prt_rd = input("\nWould you like to print the header or the raw data? Enter header, raw or no.\n")
             if prt_rd.lower() == 'header':
@@ -251,6 +256,7 @@ def main():
             if restart not in RESTART_OPT:
                  print("\nSorry, I couldn\'t understand! The option",restart,"is not available.")
             elif restart.lower() == "no":
+                 print("\n" * os.get_terminal_size().lines)
                  print("Thank you! Obrigado! Gracias! Grazie! Merci! xiè xiè!")
                  sys.exit()
 
